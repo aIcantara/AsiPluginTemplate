@@ -54,8 +54,10 @@ std::optional<HRESULT> CRender::OnPresent( const decltype( m_hookPresent )& hook
         ImGui_ImplWin32_Init( **reinterpret_cast<HWND**>( 0xC17054 ) );
         ImGui_ImplDX9_Init( pDevice );
 
-        ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
-        ImGui::GetIO().IniFilename = nullptr;
+        ImGuiIO& io = ImGui::GetIO();
+
+        io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+        io.IniFilename = nullptr;
 
 #pragma warning( push )
 #pragma warning( disable : 4996 )
@@ -63,7 +65,7 @@ std::optional<HRESULT> CRender::OnPresent( const decltype( m_hookPresent )& hook
         font += "\\Fonts\\Arialbd.TTF";
 #pragma warning( pop )
 
-        ImGui::GetIO().Fonts->AddFontFromFileTTF( font.c_str(), 15.0f, nullptr, ImGui::GetIO().Fonts->GetGlyphRangesCyrillic() );
+        io.Fonts->AddFontFromFileTTF( font.c_str(), 15.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic() );
 
         initialized = true;
     }
