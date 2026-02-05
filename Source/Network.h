@@ -15,16 +15,16 @@ public:
     bool Initialize();
 
 private:
-    bool OnReceiveRPC( unsigned char& id, RakNet::BitStream* pBitStream );
-    bool OnSendRPC( int& id, RakNet::BitStream* pBitStream, PacketPriority& priority, PacketReliability& reliability, char& ordChannel, bool& shTimestamp );
-    bool OnReceivePacket( Packet* pPacket );
-    bool OnSendPacket( RakNet::BitStream* pBitStream, PacketPriority& priority, PacketReliability& reliability, char& ordChannel );
+    bool OnReceiveRPC(unsigned char& id, RakNet::BitStream* pBitStream);
+    bool OnSendRPC(int& id, RakNet::BitStream* pBitStream, PacketPriority& priority, PacketReliability& reliability, char& ordChannel, bool& shTimestamp);
+    bool OnReceivePacket(Packet* pPacket);
+    bool OnSendPacket(RakNet::BitStream* pBitStream, PacketPriority& priority, PacketReliability& reliability, char& ordChannel);
 
     template <typename T>
-    bool ReadWithSize( RakNet::BitStream& bitStream, std::string& string );
+    bool ReadWithSize(RakNet::BitStream& bitStream, std::string& string);
 
     template <typename T>
-    void WriteWithSize( RakNet::BitStream& bitStream, std::string_view string );
+    void WriteWithSize(RakNet::BitStream& bitStream, std::string_view string);
 };
 
 #endif // __NETWORK_H__
