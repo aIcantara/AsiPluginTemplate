@@ -58,25 +58,18 @@ std::optional<HRESULT> CRender::OnPresent(const decltype(m_hookPresent)& hook, I
 
         io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
         io.IniFilename = nullptr;
-
-#pragma warning(push)
-#pragma warning(disable : 4996)
-        std::string font = getenv("WINDIR");
-        font += "\\Fonts\\Arialbd.TTF";
-#pragma warning(pop)
-
-        io.Fonts->AddFontFromFileTTF(font.c_str(), 15.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
+        
+        io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Arialbd.TTF", 15.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
 
         initialized = true;
     }
 
-    ImGui_ImplDX9_NewFrame();
-    ImGui_ImplWin32_NewFrame();
-
-    ImGui::NewFrame();
-
     if (m_menuState)
     {
+        ImGui_ImplDX9_NewFrame();
+        ImGui_ImplWin32_NewFrame();
+        ImGui::NewFrame();
+
         ImGui::SetNextWindowPos(ImVec2(100.f, 100.f), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowSize(ImVec2(300.f, 300.f), ImGuiCond_FirstUseEver);
 
@@ -85,12 +78,11 @@ std::optional<HRESULT> CRender::OnPresent(const decltype(m_hookPresent)& hook, I
             ImGui::Text(u8"Текст");
         }
         ImGui::End();
+
+        ImGui::EndFrame();
+        ImGui::Render();
+        ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
     }
-
-    ImGui::EndFrame();
-    ImGui::Render();
-
-    ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
     return std::nullopt;
 }
